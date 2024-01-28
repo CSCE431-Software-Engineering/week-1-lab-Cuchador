@@ -15,6 +15,7 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
     if @book.save
       redirect_to books_path
+      flash.alert = "Added " + @book.title + " to the collection!"
     else
       render('new')
     end
@@ -29,6 +30,7 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     if @book.update(book_params)
       redirect_to book_path(@book)
+      flash.alert = "Edited " + @book.title + " details."
     else
       render('edit')
     end
@@ -40,8 +42,10 @@ class BooksController < ApplicationController
 
   def destroy
     @book = Book.find(params[:id])
+    btitle = @book.title
     @book.destroy
     redirect_to books_path
+    flash.alert = "Removed " + btitle + " from the collection."
   end
 
   private
